@@ -26,10 +26,12 @@
                 <a class="nav-link" aria-current="page" href="{{route('home')}}">Llista de tallers</a>
               @endif
 
-              @if(Route::current()->getName() === 'taller.create')
-                <a class="nav-link active" href="{{route('taller.create')}}">Nou Taller</a>
-              @else
-                <a class="nav-link" href="{{route('taller.create')}}">Nou Taller</a>
+              @if(Auth::check())
+                @if(Route::current()->getName() === 'taller.create')
+                  <a class="nav-link active" href="{{route('taller.create')}}">Nou Taller</a>
+                @else
+                  <a class="nav-link" href="{{route('taller.create')}}">Nou Taller</a>
+                @endif
               @endif
 
               @if(Auth::check() && (Auth::user()->admin || Auth::user()->superadmin))

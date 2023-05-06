@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Usuari;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class AlumnesController extends Controller
 {
@@ -32,7 +33,6 @@ class AlumnesController extends Controller
             $fitxer = Storage::get('llista.txt');
             $linies = explode(PHP_EOL, $fitxer);
             $linies_alumnes = array();
-
             // Netejem espais i salts de linia
             foreach ($linies as $linia) {
                 $paraules = explode(" ", $linia);
@@ -41,7 +41,7 @@ class AlumnesController extends Controller
                     array_push($linies_alumnes, $array_netejada);
                 }
             }
-
+            
             // Construim una array associativa perque sigui més facil asignar camps
             $info_alumnes = array();
             foreach ($linies_alumnes as $linia) {
@@ -67,7 +67,7 @@ class AlumnesController extends Controller
                 $alumne['grup'] = $array[2];
                 array_push($info_alumnes, $alumne);
             }
-
+            
             // Comprovem per cada usuari si aquest existeix a la BBDD, si existeix sobreescrivim, si no fem un nou
             foreach ($info_alumnes as $alumne) {
                 $usuari = Usuari::where('email', $alumne['email'])->first();
@@ -108,5 +108,82 @@ class AlumnesController extends Controller
             return redirect()->back()->with('success', 'Dades carregades correctament.');
         }
         abort(403, "Què fas tu aquí?");
+    }
+
+    // Mostrar formulari per afegir un alumne
+    public function afegirAlumne(){
+        $combobox = array(
+            'ESO' => array(
+                '1' => array(
+                    'A','B','C','D','E'
+                ),
+                '2' => array(
+                    'A','B','C','D','E'
+                ),
+                '3' => array(
+                    'A','B','C','D','E'
+                ),
+                '4' => array(
+                    'A','B','C','D','E'
+                )
+            ),
+            'BAT' => array(
+                '1' => array('A','B'),
+                '2' => array('A','B')
+            ),
+            'SMX' => array(
+                '1' => array(
+                    'A','B','C','D','E'
+                ),                
+            ),
+            'FPB' => array(
+                '1' => array('A'),
+                '2' => array('A'),
+            ) 
+        );
+        return view('noualumne', compact('combobox'));
+    }
+
+    // Crear el nou alumne
+    public function createAlumne(Request $request){
+        
+        if (!Auth::check()) {
+            abort(403, "Què fas tu aquí");
+        }
+        $request->validate(
+            [
+                'nom' => 'required',
+                'curs' => 'required|not_in:0',
+            ],
+            [
+                'nom.required' => 'El camp nom és obligatori.',
+                'curs.required' => 'El camp curs és obligatori.',
+                'curs.not_in' => 'El camp curs és obligatori.'
+            ]
+        );
+
+        $cursArr = explode("-",$request->curs);
+        $etapa = $cursArr[0];
+        $curs = $cursArr[1];
+        $grup = $cursArr[2];
+
+        $usuari = new Usuari;
+        $usuari->nom = $request->nom;
+        $usuari->etapa = $etapa;
+        $usuari->curs = $curs;
+        $usuari->grup = $grup;
+
+        try {
+            $usuari->save();
+            $success = true;
+        } catch (\Throwable $th) {
+            $success = false;
+        }
+        
+        if ($success) {
+            return redirect(route('afegir_alumnes'))->with('success', 'L\'usuari s\'ha creat correctament.');
+        } else {
+            return redirect(route('afegir_alumnes'))->with('error', 'No s\'ha pogut creat l\'usuari.');
+        }
     }
 }

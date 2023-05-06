@@ -15,15 +15,17 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Alumne</th>
-      <th scope="col">Número de tallers als que s'ha apuntat</th>
+      <th scope="col" class="text-center">Número de tallers als que s'ha apuntat</th>
+      <th scope="col" class="text-center">Apuntar-lo a tres tallers</th>
     </tr>
   </thead>
   <tbody>
     @forelse($array_alumnes as $key=>$alumne)
     <tr>
       <th scope="row">{{++$key}}</th>
-      <td>{{$alumne->nom}} {{$alumne->cognoms}}</td>
-      <td>{{$alumne->tallers_que_participa_count}}</td>
+      <td >{{$alumne->nom}} {{$alumne->cognoms}}</td>
+      <td class="text-center">{{$alumne->tallers_que_participa_count}}</td>
+      <td class="text-center"></td>
     </tr>
     @empty
     @endforelse
