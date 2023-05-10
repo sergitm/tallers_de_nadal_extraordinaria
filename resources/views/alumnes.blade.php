@@ -19,7 +19,7 @@
     @csrf
     <div class="container d-flex justify-content-between">
         <a class="btn btn-dark mb-4" href="{{route('afegir_alumnes')}}">Afegeix manualment un alumne</a>
-        <input type="submit" class="btn btn-dark mb-4" value="Enviar">
+        <input type="submit" class="btn btn-dark mb-4" value="Importar">
     </div>
     <table class="table table-striped">
         <thead>

@@ -31,9 +31,20 @@
       <td>{{$alumne->etapa}}</td>
       <td>{{$alumne->curs}}</td>
       <td>{{$alumne->grup}}</td>
-      @forelse($alumne->tallers_que_participa as $taller)
+      @forelse($alumne->tallers_primera_opcio as $taller)
       <td>{{$taller->id}}-. {{$taller->nom}}</td>
       @empty
+      <td></td>
+      @endforelse
+      @forelse($alumne->tallers_segona_opcio as $taller)
+      <td>{{$taller->id}}-. {{$taller->nom}}</td>
+      @empty
+      <td></td>
+      @endforelse
+      @forelse($alumne->tallers_tercera_opcio as $taller)
+      <td>{{$taller->id}}-. {{$taller->nom}}</td>
+      @empty
+      <td></td>
       @endforelse
     </tr>
     @empty

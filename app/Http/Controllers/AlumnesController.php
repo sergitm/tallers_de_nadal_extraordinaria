@@ -171,6 +171,7 @@ class AlumnesController extends Controller
 
         $usuari = new Usuari;
         $usuari->nom = $request->nom;
+        $usuari->cognoms = $request->cognoms;
         $usuari->etapa = $etapa;
         $usuari->curs = $curs;
         $usuari->grup = $grup;
@@ -219,9 +220,9 @@ class AlumnesController extends Controller
         $usuari = Usuari::find($request->id_alumne);
 
         try {
-            $usuari->tallers_que_participa()->attach($taller1);
-            $usuari->tallers_que_participa()->attach($taller2);
-            $usuari->tallers_que_participa()->attach($taller3);
+            $usuari->tallers_primera_opcio()->attach($taller1, ['prioritat' => 1]);
+            $usuari->tallers_segona_opcio()->attach($taller2, ['prioritat' => 2]);
+            $usuari->tallers_tercera_opcio()->attach($taller3, ['prioritat' => 3]);
             $success = true;
         } catch (\Throwable $th) {
             $success = false;

@@ -52,7 +52,14 @@ class InformesController extends Controller
     // Gestionem la petició per mostrar informe dels tallers escollits pels alumnes
     public function tallers_escollits(){
         if (Auth::check() && (Auth::user()->admin || Auth::user()->superadmin)) {
-            $alumnes = Usuari::where('categoria', 'alumne')->get();
+            $usuaris = Usuari::withCount('tallers_que_participa')->get();
+            
+            $alumnes = array();
+            foreach ($usuaris as $usuari) {
+                if ($usuari->categoria == 'alumne' && $usuari->tallers_que_participa_count === 3) {
+                    array_push($alumnes, $usuari);
+                }
+            }
             
             return view('informes.escollits', compact('alumnes'));
         }

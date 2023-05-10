@@ -254,7 +254,7 @@ class TallerController extends Controller
     /**
      * Apuntar a un alumne a un taller
      */
-    public function apuntar(string $id)
+    public function apuntar(string $id, string $ordre)
     {
         if (!Auth::check()) {
             abort(403, "Què fas tu aquí");
@@ -272,7 +272,7 @@ class TallerController extends Controller
         }
 
         try {
-            $usuari->tallers_que_participa()->attach($taller);
+            $usuari->tallers_que_participa()->attach($taller, ['prioritat' => intval($ordre)]);
             $success = true;
         } catch (\Throwable $th) {
             $success = false;

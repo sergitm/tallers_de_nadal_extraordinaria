@@ -37,7 +37,7 @@
             <select class="form-select form-control  @error('taller1') is-invalid @enderror" aria-label="Default select example" name="taller1">
                 <option value="0" selected>Taller 1</option>
                 @forelse($tallers as $taller)
-                    <option value="{{$taller->id}}" selected>{{$taller->nom}}</option>
+                    <option value="{{$taller->id}}">{{$taller->nom}}</option>
                 @empty
                 @endforelse
             </select>
@@ -49,7 +49,7 @@
             <select class="form-select form-control  @error('taller2') is-invalid @enderror" aria-label="Default select example" name="taller2">
                 <option value="0" selected>Taller 2</option>
                 @forelse($tallers as $taller)
-                    <option value="{{$taller->id}}" selected>{{$taller->nom}}</option>
+                    <option value="{{$taller->id}}">{{$taller->nom}}</option>
                 @empty
                 @endforelse
             </select>
@@ -61,7 +61,7 @@
             <select class="form-select form-control  @error('taller3') is-invalid @enderror" aria-label="Default select example" name="taller3">
                 <option value="0" selected>Taller 3</option>
                 @forelse($tallers as $taller)
-                    <option value="{{$taller->id}}" selected>{{$taller->nom}}</option>
+                    <option value="{{$taller->id}}">{{$taller->nom}}</option>
                 @empty
                 @endforelse
             </select>

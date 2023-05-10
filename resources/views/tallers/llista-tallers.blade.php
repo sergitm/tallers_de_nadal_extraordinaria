@@ -61,13 +61,17 @@
                 <a class="btn btn-warning" href="{{route('taller.edit', $taller->id)}}">Veure detalls</a>
             </div>
             @else
+            @if(in_array($taller->id, $ids_tallers_que_participa))
             <div class="mt-2 d-flex justify-content-end">
-                @if(in_array($taller->id, $ids_tallers_que_participa))
                 <a class="btn btn-dark" href="{{route('baixa', $taller->id)}}">Dona't de baixa!</a>
-                @else
-                <a class="btn btn-dark" href="{{route('apuntar', $taller->id)}}">Apunta't!</a>
-                @endif
             </div>
+                @else
+                <div class="m-3 d-flex justify-content-between">
+                    <a class="btn btn-dark" href="{{route('apuntar', [$taller->id, 1])}}">Apunta't com a primera opció!</a>
+                    <a class="btn btn-dark" href="{{route('apuntar', [$taller->id, 2])}}">Apunta't com a segona opció!</a>
+                    <a class="btn btn-dark" href="{{route('apuntar', [$taller->id, 3])}}">Apunta't com a tercera opció!</a>
+                </div>
+                @endif
             @endif
             @endif
         </div>

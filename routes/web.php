@@ -31,7 +31,7 @@ Route::get('/', IniciController::class)->name('home');
 Route::get('/login', LoginLogoutController::class)->name('login');
 
 // Rutes per gestionar la donada d'alta i baixa dels alumnes als tallers
-Route::get('/taller/{taller}/apuntar', 'App\Http\Controllers\TallerController@apuntar')->name('apuntar');
+Route::get('/taller/{taller}/apuntar/{ordre}', 'App\Http\Controllers\TallerController@apuntar')->name('apuntar');
 Route::get('/taller/{taller}/baixa', 'App\Http\Controllers\TallerController@baixa')->name('baixa');
 
 // Rutes per gestionar informes
