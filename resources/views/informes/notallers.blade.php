@@ -25,7 +25,9 @@
       <th scope="row">{{++$key}}</th>
       <td >{{$alumne->nom}} {{$alumne->cognoms}}</td>
       <td class="text-center">{{$alumne->tallers_que_participa_count}}</td>
-      <td class="text-center"></td>
+      <td class="text-center">
+        <a class="btn btn-dark" href="{{route('apuntar_alumne', $alumne->id)}}">Apuntar</a>
+      </td>
     </tr>
     @empty
     @endforelse

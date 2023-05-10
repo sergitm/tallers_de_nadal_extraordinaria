@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Usuari;
+use App\Models\Taller;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 
 class AlumnesController extends Controller
 {
@@ -153,10 +153,12 @@ class AlumnesController extends Controller
         $request->validate(
             [
                 'nom' => 'required',
+                'cognoms' => 'required',
                 'curs' => 'required|not_in:0',
             ],
             [
                 'nom.required' => 'El camp nom és obligatori.',
+                'cognoms.required' => 'El camp cognoms és obligatori.',
                 'curs.required' => 'El camp curs és obligatori.',
                 'curs.not_in' => 'El camp curs és obligatori.'
             ]
@@ -184,6 +186,51 @@ class AlumnesController extends Controller
             return redirect(route('afegir_alumnes'))->with('success', 'L\'usuari s\'ha creat correctament.');
         } else {
             return redirect(route('afegir_alumnes'))->with('error', 'No s\'ha pogut creat l\'usuari.');
+        }
+    }
+
+    public function apuntarAlumne($id){
+        $alumne = Usuari::find($id);
+        $tallers = Taller::all();
+        return view('tallers.apuntar_alumne', compact('alumne', 'tallers'));
+    }
+
+    public function apuntarTallers(Request $request){
+        $request->validate(
+            [
+                'taller1' => 'required|not_in:0,' . $request->taller2 . ','. $request->taller3,
+                'taller2' => 'required|not_in:0,' . $request->taller1 . ','. $request->taller3,
+                'taller3' => 'required|not_in:0,' . $request->taller1 . ','. $request->taller2,
+            ],
+            [
+                'taller1.required' => 'El camp Taller 1 és obligatori.',
+                'taller1.not_in' => 'El camp Taller 1 és obligatori y no es pot repetir.',
+                'taller2.required' => 'El camp Taller 2 és obligatori.',
+                'taller2.not_in' => 'El camp Taller 2 és obligatori y no es pot repetir.',
+                'taller3.required' => 'El camp Taller 3 és obligatori.',
+                'taller3.not_in' => 'El camp Taller 3 és obligatori y no es pot repetir.'
+            ]
+        );
+
+        $taller1 = Taller::find($request->taller1);
+        $taller2 = Taller::find($request->taller2);
+        $taller3 = Taller::find($request->taller3);
+
+        $usuari = Usuari::find($request->id_alumne);
+
+        try {
+            $usuari->tallers_que_participa()->attach($taller1);
+            $usuari->tallers_que_participa()->attach($taller2);
+            $usuari->tallers_que_participa()->attach($taller3);
+            $success = true;
+        } catch (\Throwable $th) {
+            $success = false;
+        }
+
+        if ($success) {
+            return redirect()->back()->with('success', 'Has apuntat correctament l\'alumne al taller.');
+        } else {
+            return redirect()->back()->with('error', 'Hi ha hagut un problema i no has pogut apuntar l\'alumne al taller.');
         }
     }
 }

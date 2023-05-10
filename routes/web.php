@@ -46,6 +46,8 @@ Route::get('/alumnes/llista', AlumnesController::class)->name('llista_alumnes');
 Route::post('/administracio/actualitzar/alumnes', 'App\Http\Controllers\AlumnesController@actualitzar')->name('actualitzar_persones');
 Route::get('alumnes/afegir', 'App\Http\Controllers\AlumnesController@afegirAlumne')->name('afegir_alumnes');
 Route::post('alumnes/create', 'App\Http\Controllers\AlumnesController@createAlumne')->name('create_alumne');
+Route::get('alumnes/{alumne}/apuntar', 'App\Http\Controllers\AlumnesController@apuntarAlumne')->name('apuntar_alumne');
+Route::post('alumnes/{alumne}/apuntartaller', 'App\Http\Controllers\AlumnesController@apuntarTallers')->name('apuntar_tallers');
 
 // Rutes per gestionar l'administració
 Route::get('/administracio', AdministracioController::class)->name('administracio');

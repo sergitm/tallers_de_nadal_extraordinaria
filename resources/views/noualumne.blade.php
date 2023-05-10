@@ -23,6 +23,12 @@
             <input type="text" class="form-control  @error('nom') is-invalid @enderror" name="nom" value="{{old('nom')}}">
             {!!$errors->first('nom','<small class="text-danger">:message</small>')!!}
         </div>
+        
+        <div class="form-group my-3">
+            <label class="fw-bold" for="cognoms">Cognoms:</label>
+            <input type="text" class="form-control  @error('cognoms') is-invalid @enderror" name="cognoms" value="{{old('cognoms')}}">
+            {!!$errors->first('cognoms','<small class="text-danger">:message</small>')!!}
+        </div>
 
         <div class="form-group my-3">
             <label class="fw-bold">A quin curs pertany:</label>
