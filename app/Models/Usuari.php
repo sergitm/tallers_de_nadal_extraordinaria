@@ -29,4 +29,16 @@ class Usuari extends Model
     public function tallers_que_ajuda() : BelongsToMany {
         return $this->belongsToMany(Taller::class)->as('tallersAjuda')->wherePivot('ajudant', 1)->withTimestamps();
     }
+    
+    public function tallers_primera_opcio() : BelongsToMany {
+        return $this->belongsToMany(Taller::class)->as('tallersOpcio1')->wherePivot('prioritat', 1)->withTimestamps();
+    }
+
+    public function tallers_segona_opcio() : BelongsToMany {
+        return $this->belongsToMany(Taller::class)->as('tallersOpcio2')->wherePivot('prioritat', 2)->withTimestamps();
+    }
+
+    public function tallers_tercera_opcio() : BelongsToMany {
+        return $this->belongsToMany(Taller::class)->as('tallersOpcio3')->wherePivot('prioritat', 3)->withTimestamps();
+    }
 }

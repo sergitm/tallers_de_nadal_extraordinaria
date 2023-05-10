@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('usuari_id')->constrained('usuaris')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('taller_id')->constrained('tallers')->cascadeOnDelete()->cascadeOnUpdate();
             $table->boolean('ajudant')->default(false);
+            $table->enum('prioritat', [1, 2, 3])->nullable();
             $table->timestamps();
         });
     }
