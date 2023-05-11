@@ -16,7 +16,7 @@
 @endif
 
 <div class="container">
-    <form method="POST" action="{{route('taller.store')}}">
+    <form method="POST" action="{{route('taller.store')}}" enctype=”multipart/form-data”>
         @csrf
         @if(Auth::check() && (Auth::user()->admin || Auth::user()->superadmin))
         <label class="form-check-label fw-bold" for="flexSwitchCheckDefault">Actiu:</label>
@@ -26,6 +26,11 @@
             @else
             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="actiu">
             @endif
+        </div>
+
+        <div class="form-group my-3">
+            <label class="form-label fw-bold" for="formFile">Imatge (opcional):</label>
+            <input class="form-control" type="file" id="formFile" name="image">
         </div>
         @endif
         <div class="form-group my-3">

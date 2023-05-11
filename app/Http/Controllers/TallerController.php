@@ -159,9 +159,9 @@ class TallerController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        if (!Auth::check() || !Auth::user()->admin || !Auth::user()->superadmin) {
-            abort(403, "Què fas tu aquí");
-        }
+        // if (!(Auth::check() && Auth::user()->superadmin) || !(Auth::check() && Auth::user()->admin)) {
+        //     abort(403, "Què fas tu aquí");
+        // }
         $request->validate(
             [
                 'nom' => 'required',
@@ -171,6 +171,7 @@ class TallerController extends Controller
                 'encarregat' => 'required_if:actiu,on',
                 'ajudants' => 'required_if:actiu,on',
                 'max_participants' => ($request->actiu === 'on') ? 'required_if:actiu,on|numeric|min:2|max:20' : 'required_if:actiu,on',
+                'image' => 'image|mimes:jpg,png,jpeg|max:2048'
             ],
             [
                 'nom.required' => 'El camp nom és obligatori.',
@@ -182,15 +183,26 @@ class TallerController extends Controller
                 'max_participants.required_if' => 'Si actives el taller has de posar el màxim de participants',
                 'max_participants.min' => 'El mínim és 2',
                 'max_participants.max' => 'El màxim és 20',
-
+                'image.image' => 'El fitxer ha de ser una imatge',
+                'image.mimes' => 'Formats permesos: JPG, PNG, JPEG',
+                'image.max' => 'La mida màxima de la imatge és de 2MB (2048 KB).'
             ]
         );
-
+        
         $taller = Taller::find($id);
 
         if ($request->encarregat) {
             $encarregat = Usuari::where('email', $request->encarregat)->first();
             $taller->encarregat = $encarregat->id;
+        }
+
+        if ($request->image) {
+            try {
+                $taller->image = $taller->id.$taller->nom.'.'.$request->file('image')->extension();
+                $request->file('image')->storeAs('images', $taller->image);
+            } catch (\Throwable $th) {
+                return redirect()->back()->with('error', 'Hi ha hagut un error al guardar la imatge.');
+            }
         }
 
         $taller->nom = $request->nom;

@@ -14,7 +14,7 @@
         <span class="text-center text-white fw-bold">{{session()->get('success') ?? session()->get('error')}}</span>
     </div>
     @endif
-    <form method="POST" action="{{route('taller.update', $taller->id)}}">
+    <form method="POST" action="{{route('taller.update', $taller->id)}}" enctype="multipart/form-data">
         {{ method_field('PATCH') }}
         @csrf
         <label class="form-check-label fw-bold" for="flexSwitchCheckDefault">Actiu:</label>
@@ -25,6 +25,13 @@
             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="actiu">
             @endif
         </div>
+
+        <div class="form-group my-3">
+            <label class="form-label fw-bold" for="formFile">Imatge (opcional):</label>
+            <input class="form-control @error('image') is-invalid @enderror" type="file" id="formFile" name="image">
+            {!!$errors->first('image','<small class="text-danger">:message</small>')!!}
+        </div>
+
         <div class="form-group my-3">
             <label class="fw-bold" for="codi">Codi:</label>
             <input type="text" class="form-control" name="codi" value="{{old('id') ?? $taller->id}}" readonly>
