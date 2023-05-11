@@ -33,6 +33,12 @@
 
     <div id="taller-{{$taller->id}}" class="accordion-collapse collapse" aria-labelledby="taller-{{$taller->id}}-heading">
         <div class="accordion-body">
+            @if($taller->image)
+            <div class="row">
+                <img class="rounded mx-auto d-block" src="{{asset('storage/images/'.$taller->image)}}" [alt="Imatge del taller {{$taller->nom}}"] />
+            </div>
+            <hr class="border-3 border-top border-dark">
+            @endif
             <div class="row">
                 <div class="col"><strong>Nom:</strong> {{$taller->nom}}</div>
                 @if(Auth::check() && (Auth::user()->admin || Auth::user()->superadmin))

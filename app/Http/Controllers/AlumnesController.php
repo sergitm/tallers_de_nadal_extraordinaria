@@ -30,7 +30,8 @@ class AlumnesController extends Controller
         // Comprovem que hi hagi login i permisos si no abortem
         if (Auth::check() && (Auth::user()->admin || Auth::user()->superadmin)) {
             // Llegim el fitxer
-            $fitxer = Storage::get('llista.txt');
+            $fitxer = Storage::disk('local')->get('llista.txt');
+            dd($fitxer);
             $linies = explode(PHP_EOL, $fitxer);
             $linies_alumnes = array();
             // Netejem espais i salts de linia
