@@ -1,3 +1,4 @@
+Aquest readme es llegeix millor a la pàgina de GitHub: https://github.com/striado/tallers_de_nadal_extraordinaria
 El fitxer amb les dades dels alumnes s'ha de col·locar a /storage/app/ i s'ha de dir llista.txt.
 
 ## DESPLEGAMENT
@@ -15,10 +16,13 @@ A més d'arrencar el servidor amb "php artisan serve", s'ha d'obrir el terminal 
 
 D'aquesta manera engeguem el Vite, que es la forma en la que he implementat bootstrap SI NO NO HO TROBARÀ
 
+Fer "php artisan migrate" per crear la base de dades.
+
 Els canvis que he realitzat al .env son els següents:
 1. Afegir les línies referents al OAuth2 de Google (No les he esborrat perque tancaré el projecte de Google Cloud quan acabi el curs).
 2. Donar-li el nom a la base de dades a través de la variable d'entorn DB_DATABASE.
 3. Canviar el FILESYSTEM_DISK a public per utilitzar el mode de disc public amb les imatges dels tallers (De totes formes utilitzo tant el mode de disc public com el mode de disc local per a què el fitxer d'importació d'alumnes llista.txt no sigui públic).
+****
 
 ## PUNTS DESENVOLUPATS
 
