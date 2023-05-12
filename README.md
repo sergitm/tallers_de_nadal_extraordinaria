@@ -1,14 +1,16 @@
-El fitxer amb les dades dels alumnes s'ha de col·locat a /storage/app/ i s'ha de dir llista.txt.
+El fitxer amb les dades dels alumnes s'ha de col·locar a /storage/app/ i s'ha de dir llista.txt.
 
 A més d'arrencar el servidor amb "php artisan serve", s'ha d'obrir el terminal i fer les següents comandes:
 
 ** C:\laragon\www\
-** λ cd tallers_de_nadal\
+** λ cd tallers_de_nadal_extraordinaria\
 
-** C:\laragon\www\tallers_de_nadal(main -> origin) 
+** C:\laragon\www\tallers_de_nadal_extraordinaria(main -> origin) 
 ** λ npm run dev
 
 D'aquesta manera engeguem el Vite, que es la forma en la que he implementat bootstrap SI NO NO HO TROBARÀ
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
