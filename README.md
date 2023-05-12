@@ -16,15 +16,16 @@ A més d'arrencar el servidor amb "php artisan serve", s'ha d'obrir el terminal 
 D'aquesta manera engeguem el Vite, que es la forma en la que he implementat bootstrap SI NO NO HO TROBARÀ
 
 Els canvis que he realitzat al .env son els següents:
-1.- Afegir les línies referents al OAuth2 de Google (No les he esborrat perque tancaré el projecte de Google Cloud quan acabi el curs).
-2.- Donar-li el nom a la base de dades a través de la variable d'entorn DB_DATABASE.
-3.- Canviar el FILESYSTEM_DISK a public per utilitzar el mode de disc public amb les imatges dels tallers (De totes formes utilitzo tant el mode de disc public com el mode de disc local per a què el fitxer d'importació d'alumnes llista.txt no sigui públic).
+1. Afegir les línies referents al OAuth2 de Google (No les he esborrat perque tancaré el projecte de Google Cloud quan acabi el curs).
+2. Donar-li el nom a la base de dades a través de la variable d'entorn DB_DATABASE.
+3. Canviar el FILESYSTEM_DISK a public per utilitzar el mode de disc public amb les imatges dels tallers (De totes formes utilitzo tant el mode de disc public com el mode de disc local per a què el fitxer d'importació d'alumnes llista.txt no sigui públic).
 
 PUNTS DESENVOLUPATS
 
-* He considerat que la creació de tallers es realitzi en dos passos, un d'ells inclou l'acció d'un administrador. 
-Pas 1. L'alumne (autenticat) accedeix al formulari de creació de tallers i crea el taller. Aquest es crearà i quedarà a la BBDD de forma inactiva, és a dir, no es veurà per a ningú que no sigui un administrador.
-Pas 2. Un administrador accedeix a la pàgina de modificació de tallers i posa el taller com a ACTIU. D'aquesta forma, el taller queda aprovat i els alumnes s'hi podràn apuntar.
+**** 
+He considerat que la creació de tallers es realitzi en dos passos, un d'ells inclou l'acció d'un administrador. 
+1. Pas 1. L'alumne (autenticat) accedeix al formulari de creació de tallers i crea el taller. Aquest es crearà i quedarà a la BBDD de forma inactiva, és a dir, no es veurà per a ningú que no sigui un administrador.
+2. Pas 2. Un administrador accedeix a la pàgina de modificació de tallers i posa el taller com a ACTIU. D'aquesta forma, el taller queda aprovat i els alumnes s'hi podràn apuntar.
 
 Casuístiques: 
 
@@ -38,6 +39,9 @@ Casuístiques:
     1. L'usuari està autenticat i és un alumne (doncs els professors i administradors no s'apunten com a participants sino com a encarregats).
     2. No hi ha especificada una data per escollir tallers (disponible per administradors a la pàgina d'administració) ja que si no hi han dates ho he considerat com a via lliure.
     3. Hi ha una data inicial i final per escollir tallers, i el dia d'avui es troba entre aquestes dates, és a dir, si encara no ha arribat la data inicial o ja ha passat la data final, no deixa escollir tallers.
+
+****
+
  
 ______________________________________________________________________________________________________________________________________________________________________________________________________________
 
