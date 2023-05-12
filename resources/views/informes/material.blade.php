@@ -17,6 +17,7 @@
       <th scope="col">Taller</th>
       <th scope="col">Material</th>
       <th scope="col">Responsable</th>
+      <th scope="col" class="text-center">Editar el taller per afegir responsables o ajudants</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,7 @@
       <td>{{$taller->nom}}</td>
       <td>{{$taller->material}}</td>
       <td>{{$taller->getEncarregat?->nom}} {{$taller->getEncarregat?->cognoms}} </td>
+      <td class="text-center"><a href="{{route('taller.edit', $taller->id)}}" class="btn btn-dark">Ves-hi</a></td>
     </tr>
     @empty
     @endforelse
