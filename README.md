@@ -25,9 +25,10 @@ Els canvis que he realitzat al .env son els següents:
 * Les fases 1 i 2 estan completes. 
 * De la fase 3 m'ha quedat per fer les pàgines personalitzades dels errors HTTP. He fet una mica de gestió d'errors (sobretot de l'error 403 quan els permisos no son suficients, detectat per middlewares), però no he creat pàgines personalitzades dels diferents errors HTTP. A més, el llistat de tallers ho he fet amb format Accordion enlloc de Card, ja que els Accordions de Bootstrap hereden de les Cards i són més interactius. Per tant, he considerat que l'ús d'Accordions enlloc de Cards està justificat.
 * He fet servir Middlewares per gestionar la redirecció dels usuaris que no estàn logats a la pàgina de Login, i per mostrar un error 403 si un usuari sense els permisos suficients accedeix força la connexió a una pàgina que no deu.
+****
 
 ## EXPLICACIÓ DE LES FUNCIONALITATS, CASUÍSTIQUES DE CADA FUNCIONALITAT I LA MEVA INTERPRETACIÓ DE L'ENUNCIAT
-**** 
+
 He considerat que la creació de tallers es realitzi en dos passos, un d'ells inclou l'acció d'un administrador. 
 1. Pas 1. L'alumne (autenticat) accedeix al formulari de creació de tallers i crea el taller. Aquest es crearà i quedarà a la BBDD de forma inactiva, és a dir, no es veurà per a ningú que no sigui un administrador.
 2. Pas 2. Un administrador accedeix a la pàgina de modificació de tallers i posa el taller com a ACTIU. D'aquesta forma, el taller queda aprovat i els alumnes s'hi podràn apuntar.
@@ -47,10 +48,6 @@ Casuístiques de la creació de tallers:
     3. Hi ha una data inicial i final per escollir tallers, i el dia d'avui es troba entre aquestes dates, és a dir, si encara no ha arribat la data inicial o ja ha passat la data final, no deixa escollir tallers.
 
 ****
-
-
- 
-______________________________________________________________________________________________________________________________________________________________________________________________________________
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
