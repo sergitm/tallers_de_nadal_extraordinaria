@@ -1,6 +1,6 @@
 El fitxer amb les dades dels alumnes s'ha de col·locar a /storage/app/ i s'ha de dir llista.txt.
 
-DESPLEGAMENT
+## DESPLEGAMENT
 
 A més d'arrencar el servidor amb "php artisan serve", s'ha d'obrir el terminal i fer les següents comandes:
 
@@ -20,16 +20,22 @@ Els canvis que he realitzat al .env son els següents:
 2. Donar-li el nom a la base de dades a través de la variable d'entorn DB_DATABASE.
 3. Canviar el FILESYSTEM_DISK a public per utilitzar el mode de disc public amb les imatges dels tallers (De totes formes utilitzo tant el mode de disc public com el mode de disc local per a què el fitxer d'importació d'alumnes llista.txt no sigui públic).
 
-PUNTS DESENVOLUPATS
+## PUNTS DESENVOLUPATS
 
+* Les fases 1 i 2 estan completes. 
+* De la fase 3 m'ha quedat per fer les pàgines personalitzades dels errors HTTP. He fet una mica de gestió d'errors (sobretot de l'error 403 quan els permisos no son suficients, detectat per middlewares), però no he creat pàgines personalitzades dels diferents errors HTTP. A més, el llistat de tallers ho he fet amb format Accordion enlloc de Card, ja que els Accordions de Bootstrap hereden de les Cards i són més interactius. Per tant, he considerat que l'ús d'Accordions enlloc de Cards està justificat.
+* He fet servir Middlewares per gestionar la redirecció dels usuaris que no estàn logats a la pàgina de Login, i per mostrar un error 403 si un usuari sense els permisos suficients accedeix força la connexió a una pàgina que no deu.
+
+## EXPLICACIÓ DE LES FUNCIONALITATS, CASUÍSTIQUES DE CADA FUNCIONALITAT I LA MEVA INTERPRETACIÓ DE L'ENUNCIAT
 **** 
 He considerat que la creació de tallers es realitzi en dos passos, un d'ells inclou l'acció d'un administrador. 
 1. Pas 1. L'alumne (autenticat) accedeix al formulari de creació de tallers i crea el taller. Aquest es crearà i quedarà a la BBDD de forma inactiva, és a dir, no es veurà per a ningú que no sigui un administrador.
 2. Pas 2. Un administrador accedeix a la pàgina de modificació de tallers i posa el taller com a ACTIU. D'aquesta forma, el taller queda aprovat i els alumnes s'hi podràn apuntar.
 
-Casuístiques: 
+Casuístiques de la creació de tallers: 
 
-* Un alumne que crea un taller no s'hi apunta automàticament, ja que un alumne pot crear múltiples tallers si té bones propostes i sería difícil determinar l'ordre de prioritat, així que he considerat que es millor donar banda ampla a la creació de tallers i que s'apuntin als que vulguin (sempre i quan un administrador ho aprovi).
+* Un alumne que crea un taller no s'hi apunta automàticament, ja que un alumne pot crear múltiples tallers si té bones propostes i sería difícil determinar l'ordre de prioritat, així que he considerat que es millor donar banda ampla a la creació de tallers i que s'apuntin als que vulguin (sempre i quan un administrador hagi aprovat el taller) segons l'ordre de prioritat que l'alumne consideri i fins a un màxim de 3. A dalt de tot de la llista de tallers hi ha un comptador de tallers que es posarà en verd un cop l'alumne s'hagi apuntat a 3 tallers, si s'ha apuntat a menys, el missatge serà vermell. A la dreta, hi haurà un missatge informatiu sobre les dates inicial i final per apuntar-se als tallers (sempre que hi hagi dates especificades per administració).
+
 * Els tallers només es podràn crear si:
     1. L'alumne està autenticat.
     2. No hi ha especificada una data per crear tallers (disponible per administradors a la pàgina d'administració) ja que si no hi han dates ho he considerat com a via lliure.
@@ -41,6 +47,7 @@ Casuístiques:
     3. Hi ha una data inicial i final per escollir tallers, i el dia d'avui es troba entre aquestes dates, és a dir, si encara no ha arribat la data inicial o ja ha passat la data final, no deixa escollir tallers.
 
 ****
+
 
  
 ______________________________________________________________________________________________________________________________________________________________________________________________________________
