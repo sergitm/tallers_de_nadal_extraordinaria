@@ -187,7 +187,6 @@ class TallerController extends Controller
             $ajudants = implode(',', $emailArr);
             return view('tallers.edit', compact(['taller', 'cursos', 'usuaris', 'ajudants']));
         }
-
         abort(403, 'No tens permís per veure aquest pàgina.');
     }
 
@@ -197,9 +196,9 @@ class TallerController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        // if (!(Auth::check() && Auth::user()->superadmin) || !(Auth::check() && Auth::user()->admin)) {
-        //     abort(403, "Què fas tu aquí");
-        // }
+        if (!Auth::check() || !Auth::user()->admin || !Auth::user()->superadmin) {
+            abort(403, "Què fas tu aquí");
+        }
         $request->validate(
             [
                 'nom' => 'required',
@@ -306,10 +305,6 @@ class TallerController extends Controller
      */
     public function apuntar(string $id, string $ordre)
     {
-        if (!Auth::check()) {
-            abort(403, "Què fas tu aquí");
-        }
-
         $usuari = Usuari::find(Auth::user()->id);
         $taller = Taller::find($id);
 
@@ -339,9 +334,6 @@ class TallerController extends Controller
      * Donar de baixa d'un taller
      */
     public function baixa(string $id){
-        if (!Auth::check()) {
-            abort(403, "Què fas tu aquí");
-        }
         $usuari = Usuari::find(Auth::user()->id);
         $taller = Taller::find($id);
 

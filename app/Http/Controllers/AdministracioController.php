@@ -14,12 +14,9 @@ class AdministracioController extends Controller
      */
     public function __invoke(Request $request)
     {
-        if (Auth::check() && (Auth::user()->admin || Auth::user()->superadmin)) {
-            $professors = Usuari::where('categoria', 'professor')->get();
-            $settings = Settings::where('nom','settings')->first();
-            return view('administracio', compact('professors','settings'));
-        }
-        abort(403, "Què fas tu aquí?");
+        $professors = Usuari::where('categoria', 'professor')->get();
+        $settings = Settings::where('nom','settings')->first();
+        return view('administracio', compact('professors','settings'));
     }
 
     /**
@@ -27,38 +24,32 @@ class AdministracioController extends Controller
      */
     public function fer_admin(Request $request)
     {
-        // Comprovem que qui entra està logat i té permisos, si no abortem
-        if (Auth::check() && Auth::user()->superadmin) {
-
-            // Intentem actualitzar els permisos, si falla retornem amb un missatge
-            try {
-                // Agafem tots els administradors i primer treiem permisos
-                $admins = Usuari::where('admin', 1)->get();
-                foreach ($admins as $admin) {
-                    $admin->admin = false;
-                    $admin->save();
-                }
-                // Després li donem permisos a qui hagi escollit l'admin
-                if (!empty($request->admin)) {
-                    foreach ($request->admin as $id) {
-                        $professor = Usuari::find($id);
-                        $professor->admin = true;
-                        $professor->save();
-                    }
-                }
-                $success = true;
-            } catch (\Throwable $th) {
-                $success = false;
+        // Intentem actualitzar els permisos, si falla retornem amb un missatge
+        try {
+            // Agafem tots els administradors i primer treiem permisos
+            $admins = Usuari::where('admin', 1)->get();
+            foreach ($admins as $admin) {
+                $admin->admin = false;
+                $admin->save();
             }
-            // Redireccionem en funció de si ha anat bé o no
-            if ($success) {
-                return redirect()->back()->with('success', 'Permisos actualitzats correctament.');
-            } else {
-                return redirect()->back()->with('error', 'No s\'han pogut actualitzar els permisos.');
+            // Després li donem permisos a qui hagi escollit l'admin
+            if (!empty($request->admin)) {
+                foreach ($request->admin as $id) {
+                    $professor = Usuari::find($id);
+                    $professor->admin = true;
+                    $professor->save();
+                }
             }
+            $success = true;
+        } catch (\Throwable $th) {
+            $success = false;
         }
-        // Abort
-        abort(403, "Què fas aquí");
+        // Redireccionem en funció de si ha anat bé o no
+        if ($success) {
+            return redirect()->back()->with('success', 'Permisos actualitzats correctament.');
+        } else {
+            return redirect()->back()->with('error', 'No s\'han pogut actualitzar els permisos.');
+        }
     }
 
     public function config_dates(Request $request)
