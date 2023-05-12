@@ -1,4 +1,5 @@
 Aquest readme es llegeix millor a la pàgina de GitHub: https://github.com/striado/tallers_de_nadal_extraordinaria
+
 El fitxer amb les dades dels alumnes s'ha de col·locar a /storage/app/ i s'ha de dir llista.txt.
 
 ## DESPLEGAMENT
@@ -8,10 +9,10 @@ A més d'arrencar el servidor amb "php artisan serve", s'ha d'obrir el terminal 
 ** C:\laragon\www\
 ** λ cd tallers_de_nadal_extraordinaria\
 
-** C:\laragon\www\tallers_de_nadal_extraordinaria(main -> origin) 
+** C:\laragon\www\tallers_de_nadal_extraordinaria(main -> origin)
 ** λ npm install
 
-** C:\laragon\www\tallers_de_nadal_extraordinaria(main -> origin) 
+** C:\laragon\www\tallers_de_nadal_extraordinaria(main -> origin)
 ** λ npm run dev
 
 D'aquesta manera engeguem el Vite, que es la forma en la que he implementat bootstrap SI NO NO HO TROBARÀ
