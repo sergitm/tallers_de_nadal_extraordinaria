@@ -75,4 +75,5 @@ class InformesController extends Controller
         }
         abort(403, "No tens permís per veure informes.");
     }
+    
 }

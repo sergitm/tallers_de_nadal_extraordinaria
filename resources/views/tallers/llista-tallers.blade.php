@@ -11,10 +11,16 @@
 @section('list-content')
 
 @if(Auth::check() && (Auth::user()->categoria === 'alumne'))
-<div class="container mb-5">
+<div class="container mb-5 d-flex justify-content-between">
     <p class="fw-bold @if($tallers_que_participa == 3) text-success @endif">Nombre de tallers als que t'has apuntat: {{$tallers_que_participa}} de 3</p>
+    @if($data_inicial_format && $data_final_format)
+    <p class="fw-bold">Les inscripcions estàn obertes entre <span class="text-decoration-underline">{{$data_inicial_format}}</span> i <span class="text-decoration-underline">{{$data_final_format}}</span></p>
+    @endif
 </div>
 @endif
+
+
+
 @if(session()->has('success') || session()->has('error'))
 <div class="container mb-3 @if(session()->has('success')) bg-success @endif @if(session()->has('error')) bg-danger @endif">
     <span class="text-center text-white fw-bold">{{session()->get('success') ?? session()->get('error')}}</span>
@@ -72,11 +78,13 @@
                 <a class="btn btn-dark" href="{{route('baixa', $taller->id)}}">Dona't de baixa!</a>
             </div>
                 @else
+                @if($esPotApuntar)
                 <div class="m-3 d-flex justify-content-between">
                     <a class="btn btn-dark" href="{{route('apuntar', [$taller->id, 1])}}">Apunta't com a primera opció!</a>
                     <a class="btn btn-dark" href="{{route('apuntar', [$taller->id, 2])}}">Apunta't com a segona opció!</a>
                     <a class="btn btn-dark" href="{{route('apuntar', [$taller->id, 3])}}">Apunta't com a tercera opció!</a>
                 </div>
+                @endif
                 @endif
             @endif
             @endif

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Taller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Usuari;
+use App\Models\Settings;
+use DateTime;
 
 class TallerController extends Controller
 {
@@ -29,7 +31,31 @@ class TallerController extends Controller
             }
         }
 
-        return view('tallers/llista-tallers', compact('tallers', 'tallers_que_participa', 'ids_tallers_que_participa'));
+        $esPotApuntar = true;
+
+        $settings = Settings::where('nom','settings')->first();
+        if ($settings->eleccio_tallers_data_inicial != null) {
+            $data_inicial = new DateTime($settings->eleccio_tallers_data_inicial);
+            $data_inicial_format = $data_inicial->format("d-m-Y");
+        } else {
+            $data_inicial_format = false;
+        }
+
+        if ($settings->eleccio_tallers_data_final != null) {
+            $data_final = new DateTime($settings->eleccio_tallers_data_final);
+            $data_final_format = $data_final->format("d-m-Y");
+        } else {
+            $data_inicial_format = false;
+        }
+
+        $avui = date('Y-m-d');
+        if ($settings->eleccio_tallers_data_inicial > $avui) {
+            $esPotApuntar = false;
+        } elseif ($settings->eleccio_tallers_data_final < $avui) {
+            $esPotApuntar = false;
+        }
+
+        return view('tallers/llista-tallers', compact('tallers', 'tallers_que_participa', 'ids_tallers_que_participa', 'data_inicial_format','data_final_format', 'esPotApuntar'));
     }
 
     /**
@@ -46,7 +72,19 @@ class TallerController extends Controller
 
         $usuaris = Usuari::all();
 
-        return view('tallers/nou-taller', compact('nou_taller', 'usuaris'));
+        $settings = Settings::where('nom','settings')->first();
+        $avui = date('Y-m-d');
+        $data_inicial = new DateTime($settings->creacio_tallers_data_inicial);
+        $data_inicial_format = $data_inicial->format("d-m-Y");
+        $data_final = new DateTime($settings->creacio_tallers_data_final);
+        $data_final_format = $data_final->format("d-m-Y");
+        if ($settings->creacio_tallers_data_inicial > $avui) {
+            return view('tallers/no_creacio', compact('data_inicial_format'));
+        } elseif ($settings->creacio_tallers_data_final < $avui) {
+            return view('tallers/no_creacio', compact('data_final_format'));
+        } else {
+            return view('tallers/nou-taller', compact('nou_taller', 'usuaris'));
+        }
     }
 
     /**

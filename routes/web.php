@@ -52,6 +52,7 @@ Route::post('alumnes/{alumne}/apuntartaller', 'App\Http\Controllers\AlumnesContr
 // Rutes per gestionar l'administració
 Route::get('/administracio', AdministracioController::class)->name('administracio');
 Route::post('/administracio/convertir', 'App\Http\Controllers\AdministracioController@fer_admin')->name('fer_admin');
+Route::post('/administracio/config', 'App\Http\Controllers\AdministracioController@config_dates')->name('config');
 
 
 // Rutes pel login de google

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Usuari;
@@ -13,9 +14,10 @@ class AdministracioController extends Controller
      */
     public function __invoke(Request $request)
     {
-        if (Auth::check() && Auth::user()->superadmin) {
+        if (Auth::check() && (Auth::user()->admin || Auth::user()->superadmin)) {
             $professors = Usuari::where('categoria', 'professor')->get();
-            return view('administracio', compact('professors'));
+            $settings = Settings::where('nom','settings')->first();
+            return view('administracio', compact('professors','settings'));
         }
         abort(403, "Què fas tu aquí?");
     }
@@ -57,5 +59,51 @@ class AdministracioController extends Controller
         }
         // Abort
         abort(403, "Què fas aquí");
+    }
+
+    public function config_dates(Request $request)
+    {
+        $request->validate(
+            [
+                'creacio_inici' => 'required_with:creacio_final',
+                'creacio_final' => 'required_with:creacio_inici',
+                'eleccio_inici' => 'required_with:eleccio_final',
+                'eleccio_final' => 'required_with:eleccio_inici',
+            ],
+            [
+                'creacio_inici.required_with' => 'El camp data inicial de creació és obligatori si esculls una data final.',
+                'creacio_final.required_with' => 'El camp data final de creació és obligatori si esculls una data inicial.',
+                'eleccio_inici.required_with' => 'El camp data inicial d\'elecció és obligatori si esculls una data final.',
+                'eleccio_final.required_with' => 'El camp data final d\'elecció és obligatori si esculls una data inicial.',
+            ]
+        );
+
+        
+        try {
+            $settings = Settings::where('nom', 'settings')->first();
+            if ($request->creacio_inici) {
+                $settings->creacio_tallers_data_inicial = $request->creacio_inici;
+            }
+            if ($request->creacio_final) {
+                $settings->creacio_tallers_data_final = $request->creacio_final;
+            }
+            if ($request->eleccio_inici) {
+                $settings->eleccio_tallers_data_inicial = $request->eleccio_inici;
+            }
+            if ($request->eleccio_final) {
+                $settings->eleccio_tallers_data_final = $request->eleccio_final;
+            }
+            $settings->save();
+            $success = true;
+        } catch (\Throwable $th) {
+            $success = false;
+        }
+        
+        // Redireccionem en funció de si ha anat bé o no
+        if ($success) {
+            return redirect()->back()->with('success', 'Dades de configuració actualitzades correctament.');
+        } else {
+            return redirect()->back()->with('error', 'No s\'han pogut actualitzar les dades de configuració.');
+        }
     }
 }

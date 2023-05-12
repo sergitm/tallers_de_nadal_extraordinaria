@@ -50,7 +50,7 @@
                 @endif
               @endif
 
-              @if(Auth::check() && Auth::user()->superadmin)
+              @if(Auth::check() && (Auth::user()->admin || Auth::user()->superadmin))
                 @if(Route::current()->getName() === 'administracio')
                   <a class="nav-link active" href="{{route('administracio')}}">Administracio</a>
                 @else
