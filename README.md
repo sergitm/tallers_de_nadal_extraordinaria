@@ -27,13 +27,14 @@ Pas 1. L'alumne (autenticat) accedeix al formulari de creació de tallers i crea
 Pas 2. Un administrador accedeix a la pàgina de modificació de tallers i posa el taller com a ACTIU. D'aquesta forma, el taller queda aprovat i els alumnes s'hi podràn apuntar.
 
 Casuístiques: 
--Un alumne que crea un taller no s'hi apunta automàticament, ja que un alumne pot crear múltiples tallers si té bones propostes i sería difícil determinar l'ordre de prioritat, així que he considerat que es millor donar banda ampla a la creació de tallers i que s'apuntin als que vulguin (sempre i quan un administrador ho aprovi).
--Els tallers només es podràn crear si:
+
+* Un alumne que crea un taller no s'hi apunta automàticament, ja que un alumne pot crear múltiples tallers si té bones propostes i sería difícil determinar l'ordre de prioritat, així que he considerat que es millor donar banda ampla a la creació de tallers i que s'apuntin als que vulguin (sempre i quan un administrador ho aprovi).
+* Els tallers només es podràn crear si:
     1. L'alumne està autenticat.
     2. No hi ha especificada una data per crear tallers (disponible per administradors a la pàgina d'administració) ja que si no hi han dates ho he considerat com a via lliure.
     3. Hi ha una data inicial i final per crear tallers, i el dia d'avui es troba entre aquestes dates, és a dir, si encara no ha arribat la data inicial o ja ha passat la data final, no deixa crear tallers.
 
--Un usuari només es podrà apuntar a un taller si:
+* Un usuari només es podrà apuntar a un taller si:
     1. L'usuari està autenticat i és un alumne (doncs els professors i administradors no s'apunten com a participants sino com a encarregats).
     2. No hi ha especificada una data per escollir tallers (disponible per administradors a la pàgina d'administració) ja que si no hi han dates ho he considerat com a via lliure.
     3. Hi ha una data inicial i final per escollir tallers, i el dia d'avui es troba entre aquestes dates, és a dir, si encara no ha arribat la data inicial o ja ha passat la data final, no deixa escollir tallers.
