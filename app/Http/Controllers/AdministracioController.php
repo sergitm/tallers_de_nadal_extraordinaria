@@ -66,15 +66,17 @@ class AdministracioController extends Controller
         $request->validate(
             [
                 'creacio_inici' => 'required_with:creacio_final',
-                'creacio_final' => 'required_with:creacio_inici',
+                'creacio_final' => 'required_with:creacio_inici|after_or_equal:'.$request->creacio_inici,
                 'eleccio_inici' => 'required_with:eleccio_final',
-                'eleccio_final' => 'required_with:eleccio_inici',
+                'eleccio_final' => 'required_with:eleccio_inici|after_or_equal:'.$request->eleccio_inici,
             ],
             [
                 'creacio_inici.required_with' => 'El camp data inicial de creació és obligatori si esculls una data final.',
                 'creacio_final.required_with' => 'El camp data final de creació és obligatori si esculls una data inicial.',
+                'creacio_final.after_or_equal' => 'La data final per crear tallers no pot ser anterior a la inicial.',
                 'eleccio_inici.required_with' => 'El camp data inicial d\'elecció és obligatori si esculls una data final.',
                 'eleccio_final.required_with' => 'El camp data final d\'elecció és obligatori si esculls una data inicial.',
+                'eleccio_final.after_or_equal' => 'La data final per escollir tallers no pot ser anterior a la inicial.',
             ]
         );
 
