@@ -94,6 +94,8 @@ A través de la pàgina d'informes podrem viatjar a diversos informes amb inform
 A la pàgina d'informes s'hi troben aquests 3, però hi ha un tipus d'informe més disponible pels administradors, que s'accedeixa través de la llista de tallers. Si un administrador, desde la llista de tallers, clica al botó "Veure participants", l'aplicació el portarà al informe de participants.
 * En aquest informe, veiem les dades del taller, tant lloc com el nom, qui són els encarregats i els ajudants, tot seguit d'una llista dels alumnes apuntats.
 
+****
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
