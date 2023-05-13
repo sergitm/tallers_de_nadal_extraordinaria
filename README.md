@@ -36,6 +36,8 @@ Els canvis que he realitzat al .env son els següents:
 
 ## EXPLICACIÓ DE LES FUNCIONALITATS, CASUÍSTIQUES DE CADA FUNCIONALITAT I LA MEVA INTERPRETACIÓ DE L'ENUNCIAT
 
+
+### Creació de tallers
 He considerat que la creació de tallers es realitzi en dos passos, un d'ells inclou l'acció d'un administrador. 
 1. Pas 1. L'alumne (autenticat) accedeix al formulari de creació de tallers i crea el taller. Aquest es crearà i quedarà a la BBDD de forma inactiva, és a dir, no es veurà per a ningú que no sigui un administrador.
 2. Pas 2. Un administrador accedeix a la pàgina de modificació de tallers i posa el taller com a ACTIU. D'aquesta forma, el taller queda aprovat i els alumnes s'hi podràn apuntar.
@@ -54,7 +56,43 @@ Casuístiques de la creació de tallers:
     2. No hi ha especificada una data per escollir tallers (disponible per administradors a la pàgina d'administració) ja que si no hi han dates ho he considerat com a via lliure.
     3. Hi ha una data inicial i final per escollir tallers, i el dia d'avui es troba entre aquestes dates, és a dir, si encara no ha arribat la data inicial o ja ha passat la data final, no deixa escollir tallers.
 
-****
+### Edició de tallers
+L'edició de tallers només és accessible per administradors, des d'aquesta pàgina els administradors podran activar els tallers, afegir encarregats, ajudants, i modificar les dades del taller escollit. S'inclou un botó per eliminar el taller si es considerés adequat.
+
+Casuístiques de la modificació de tallers:
+
+* Molts dels camps no són obligatoris, però la majoria ho seràn si es marca com a actiu. (No es pot activar un taller si no s'especifica un aula, encarregats i ajudants).
+* Assignar una imatge a un taller és opcional, pot tenir-ne o no.
+* Per editar un taller, un usuari ha d'estar logat amb permisos d'administrador i, desde la llista de tallers, clicar al botó "Veure detalls".
+
+### Administració
+Només hi ha una pàgina d'administració, però, segons els permisos que tingui l'usuari (admin o superadmin) podrà veure més o menys coses. Un admin només veurà el formulari per introduir les dates per crear i escollir tallers. Un superadmin, a més d'això, veurà un llistat de professors a través del cual podrà assignar permisos d'administració a qui vulgui.
+
+Casuístiques de l'administració:
+
+* Només cicles@sapalomera.cat té permisos d'administració a través d'una Migrate, no es pot otorgar a ningú aquest permís a través de la web. 
+* No és obligatori escollir dates per creació i elecció de tallers. Si no n'hi han, simplement no hi haurà restricció de dates.
+* Només els professors surten a la llista d'usuaris als que se'ls-hi pot assignar permisos d'administració.
+
+### Alumnes del Centre
+A través de l'informe d'alumnes del centre, on es poden veure tots els usuaris del centre, s'hi poden fer dues accions:
+1. Importar usuaris a través del fitxer llista.txt.
+2. Afegir manualment un alumne (en el cas que no es trobi a la BBDD per incorporar-se tard al curs).
+
+Casuístiques de Alumnes del Centre
+* El fitxer llista.txt per importar alumnes s'ha de trobar al directori /storage/app/llista.txt i s'ha de dir llista.txt o l'aplicació no ho trobarà.
+* El tractament de Etapa-Curs-Grup ho faig per camps diferenciats a la BBDD.
+* Quan s'importen alumnes a través del botó "Importar", l'aplicació busca el fitxer llista.txt, crea una llista d'usuaris a partir de la informació del fitxer, i comprova si aquests alumnes ja existeixen a la BBDD. Si no existeixen, els crea, i si ja existeixen, els modifica. D'aquesta manera, l'etapa, curs i grup de cada alumne s'haura actualitzant cada any quan s'importi el fitxer.
+* Quan s'afegeix manualment un alumne, ens redirigeix a un petit formulari on només és necessari posar el seu nom i cognoms, i a quina classe va.
+
+### Informes
+A través de la pàgina d'informes podrem viatjar a diversos informes amb informació del lloc. Només els administradors tenen accés als informes. 
+1. El primer informe és "Alumnes sense taller" on podren veure un llistat d'alumnes que no s'ha apuntat a cap taller (inclosos els que hem creat manualment a través d'Alumnes del Centre) i assignar-los 3 tallers. Al clicar al botó "Apuntar" de qualsevol alumne, ens porta a un petit formulari on les dades de l'alumne s'emplenen automàticament, i només hem d'escollir els tallers amb la prioritat que ens hagi dit aquell alumne (no es pot escollir el mateix taller a més d'una opció).
+2. Informe de material. En aquest informe veiem una llista amb tots els tallers, amb el material necessari qui n'és responsable. També hi ha un botó a cada taller per viatjar a la pàgina d'edició de tallers en cas que vulguem canviar tant el material com els responsables.
+3. Tallers escollits pels alumnes. En aquest informe veurem una llista de tots els alumnes que s'han apuntat a 3 tallers i quins són aquests tallers, segons l'ordre de prioritat que l'alumne va escollir.
+
+A la pàgina d'informes s'hi troben aquests 3, però hi ha un tipus d'informe més disponible pels administradors, que s'accedeixa través de la llista de tallers. Si un administrador, desde la llista de tallers, clica al botó "Veure participants", l'aplicació el portarà al informe de participants.
+* En aquest informe, veiem les dades del taller, tant lloc com el nom, qui són els encarregats i els ajudants, tot seguit d'una llista dels alumnes apuntats.
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
