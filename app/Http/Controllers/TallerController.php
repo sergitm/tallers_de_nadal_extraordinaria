@@ -45,7 +45,7 @@ class TallerController extends Controller
             $data_final = new DateTime($settings->eleccio_tallers_data_final);
             $data_final_format = $data_final->format("d-m-Y");
         } else {
-            $data_inicial_format = false;
+            $data_final_format = false;
         }
 
         $avui = date('Y-m-d');
